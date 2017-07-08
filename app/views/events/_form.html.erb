@@ -1,0 +1,9 @@
+<%= form_for(@event) do |f| %>
+  <%= f.label :タイトル %>
+  <%= f.text_field :title %>
+
+  <%= f.label :詳細 %>
+  <%= f.text_field :description %>
+
+  <%= f.submit '投稿' %>
+<% end %>
