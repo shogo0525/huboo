@@ -10,4 +10,12 @@ class User < ApplicationRecord
   def participate!(event)
     participants.create!(event_id: event.id)
   end
+
+  def participated?(event)
+    participants.find_by(event_id: event.id)
+  end
+
+  def cancel!(event)
+    participants.find_by(event_id: event.id).destroy
+  end
 end

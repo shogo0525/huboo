@@ -9,9 +9,15 @@
       <td><%= link_to '削除', event_path(event), method: :delete, data: { confirm: "Are you sure you want to delete?" }%></td>
       <td>
         <% if user_signed_in? %>
-          <%= form_for(current_user.participants.build(event_id: event.id)) do |f| %>
-            <%= f.hidden_field :event_id %>
-            <%= f.submit "参加する" %>
+          <% if current_user.participated?(event) %>
+            <%= form_for(current_user.participants.find_by(event_id: event.id), html: { method: :delete }) do |f| %>
+              <%= f.submit "参加をキャンセルする" %>
+            <% end %>
+          <% else %>
+            <%= form_for(current_user.participants.build(event_id: event.id)) do |f| %>
+              <%= f.hidden_field :event_id %>
+              <%= f.submit "参加する" %>
+            <% end %>
           <% end %>
         <% end %>
       </td>
