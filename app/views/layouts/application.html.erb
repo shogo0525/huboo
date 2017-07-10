@@ -16,6 +16,7 @@
        <li><%= link_to 'ログイン', new_user_session_path %></li>
        <li><%= link_to 'サインアップ', new_user_registration_path %></li>
      <% end %>
+     <%= notice %>
     </header>
     <%= yield %>
     <%= javascript_pack_tag 'hello_vue' %>
