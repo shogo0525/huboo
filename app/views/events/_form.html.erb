@@ -1,9 +1,23 @@
-<%= form_for(@event) do |f| %>
-  <%= f.label :タイトル %>
-  <%= f.text_field :title %>
+<%= form_for event do |f| %>
+  <div>
+    <%= f.label :タイトル %>
+    <%= f.text_field :title %>
 
-  <%= f.label :詳細 %>
-  <%= f.text_field :description %>
+    <%= f.label :概要 %>
+    <%= f.text_field :description %>
+  </div>
+  <div>
+    <%= f.fields_for :tickets do |tf| %>
+      <%= tf.label :チケット名 %>
+      <%= tf.text_field :name %>
+
+      <%= tf.label :参加費 %>
+      <%= tf.number_field :price %>
+
+      <%= tf.label :枚数 %>
+      <%= tf.number_field :capacity %>
+    <% end %>
+  </div>
 
   <%= f.submit '投稿' %>
 <% end %>
