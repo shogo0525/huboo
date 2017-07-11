@@ -1,11 +1,14 @@
 <h2>イベントを作成する</h2>
-<%= render 'form' %>
+<%= render 'form', event: @event %>
 
 <table>
   <% @events.each do |event| %>
     <tr>
       <td><%= event.title %></td>
       <td><%= event.description %></td>
+      <td><%= event.tickets.first.name %></td>
+      <td><%= "#{event.tickets.first.price}円" %></td>
+      <td><%= "#{event.tickets.first.capacity}枚" %></td>
       <td><%= link_to '削除', event_path(event), method: :delete, data: { confirm: "Are you sure you want to delete?" }%></td>
       <td>
         <% if user_signed_in? %>

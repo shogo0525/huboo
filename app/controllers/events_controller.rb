@@ -3,6 +3,7 @@ class EventsController < ApplicationController
   def index
     @events = Event.all
     @event = Event.new
+    @event.tickets.build
   end
 
   def show
@@ -10,6 +11,7 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
+    @event.tickets.build
   end
 
   def create
@@ -32,8 +34,12 @@ class EventsController < ApplicationController
 
   private
     def events_params
-      params.require(:event).permit(:title, :description)
+      params.require(:event).permit(
+        :title, :description,
+        tickets_attributes: [:name, :price, :capacity]
+    )
     end
+
     def set_event
       @event = Event.find(params[:id])
     end
