@@ -9,6 +9,7 @@
       <td><%= event.tickets.first.name %></td>
       <td><%= "#{event.tickets.first.price}円" %></td>
       <td><%= "#{event.tickets.first.capacity}枚" %></td>
+      <td><%= link_to '複製', event_copy_path(event) %></td>
       <td><%= link_to '削除', event_path(event), method: :delete, data: { confirm: "Are you sure you want to delete?" }%></td>
       <td>
         <% if user_signed_in? %>
