@@ -1,10 +1,10 @@
 <%= form_for event do |f| %>
   <div>
     <%= f.label :タイトル %>
-    <%= f.text_field :title %>
+    <%= f.text_field :title, value: @copy&.title %>
 
     <%= f.label :概要 %>
-    <%= f.text_field :description %>
+    <%= f.text_field :description, value: @copy&.description %>
   </div>
   <div>
     <%= f.fields_for :tickets do |tf| %>
