@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170710123909) do
+ActiveRecord::Schema.define(version: 20170716061016) do
+
+  create_table "event_owners", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "user_id"
+    t.bigint "event_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_event_owners_on_event_id"
+    t.index ["user_id", "event_id"], name: "index_event_owners_on_user_id_and_event_id", unique: true
+    t.index ["user_id"], name: "index_event_owners_on_user_id"
+  end
 
   create_table "events", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "title"
@@ -57,6 +67,8 @@ ActiveRecord::Schema.define(version: 20170710123909) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "event_owners", "events"
+  add_foreign_key "event_owners", "users"
   add_foreign_key "participants", "events"
   add_foreign_key "participants", "users"
   add_foreign_key "tickets", "events"

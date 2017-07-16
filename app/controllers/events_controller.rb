@@ -17,6 +17,7 @@ class EventsController < ApplicationController
   def create
     @event = Event.new(events_params)
     if @event.save
+      current_user.event_owners.create(event_id: @event.id)
       redirect_to root_path, notice: "イベントを作成しました！"
     else
       render :new
