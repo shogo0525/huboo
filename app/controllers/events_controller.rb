@@ -4,6 +4,9 @@ class EventsController < ApplicationController
     @events = Event.all
     @event = Event.new
     @event.tickets.build
+
+    # test for gon
+    gon.user_name = '名無しさん'
   end
 
   def show
