@@ -1,0 +1,30 @@
+<h3>イベント情報</h3>
+<ul>
+  <li>イベント名：<%= @event.title %></li>
+  <li>概要：<%= @event.description %></li>
+  <li>チケット名：<%= @event.tickets.first.name %></li>
+  <li>参加費：<%= "#{@event.tickets.first.price}円" %></li>
+  <li>定員：<%= "#{@event.tickets.first.capacity}人" %></li>
+</ul>
+
+<% if user_signed_in? %>
+  <% if current_user.participated?(@event) %>
+    <%= form_for(current_user.participants.find_by(event_id: @event.id), html: { method: :delete }) do |f| %>
+      <%= f.submit "参加をキャンセルする" %>
+    <% end %>
+  <% else %>
+    <%= form_for(current_user.participants.build(event_id: @event.id)) do |f| %>
+      <%= f.hidden_field :event_id %>
+      <%= f.submit "参加する" %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<h3>参加者一覧</h3>
+<% if @event.participants.present? %>
+  <ul>
+    <% @event.participants.each do |participant| %>
+      <li><%= participant.user.id %></li>
+    <% end %>
+  </ul>
+<% end %>

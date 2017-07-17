@@ -4,37 +4,9 @@
 <table>
   <% @events.each do |event| %>
     <tr>
-      <td><%= event.title %></td>
-      <td><%= event.description %></td>
-      <td><%= event.tickets.first.name %></td>
-      <td><%= "#{event.tickets.first.price}円" %></td>
-      <td><%= "#{event.tickets.first.capacity}枚" %></td>
-      <td><%= link_to '複製', event_copy_path(event) %></td>
+      <td><%= link_to event.title, event_path(event) %></td>
+      <td>（<%= event.description %>）</td>
       <td><%= link_to '削除', event_path(event), method: :delete, data: { confirm: "Are you sure you want to delete?" }%></td>
-      <td>
-        <% if user_signed_in? %>
-          <% if current_user.participated?(event) %>
-            <%= form_for(current_user.participants.find_by(event_id: event.id), html: { method: :delete }) do |f| %>
-              <%= f.submit "参加をキャンセルする" %>
-            <% end %>
-          <% else %>
-            <%= form_for(current_user.participants.build(event_id: event.id)) do |f| %>
-              <%= f.hidden_field :event_id %>
-              <%= f.submit "参加する" %>
-            <% end %>
-          <% end %>
-        <% end %>
-      </td>
-      <% if event.participants.present? %>
-        <% participants = event.participants %>
-        <td>
-          参加者ID：
-          <% participants.each_with_index do |participant, index| %>
-            <%= participant.user.id.to_s %>
-            <%= "/" unless index + 1 == participants.length %>
-          <% end %>
-        </td>
-      <% end %>
     </tr>
   <% end %>
 </table>
