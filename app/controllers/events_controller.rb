@@ -5,8 +5,8 @@ class EventsController < ApplicationController
     @event = Event.new
     @event.tickets.build
 
-    # test for gon
-    gon.user_name = '名無しさん'
+    # sample for gon
+    gon.user_name = current_user.try!(:name) || '名無しさん'
   end
 
   def show
