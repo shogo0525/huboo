@@ -7,7 +7,7 @@ class User < ApplicationRecord
   has_many :participants, dependent: :destroy
   has_many :event_owners, dependent: :destroy
   has_many :events, through: :participants
-  has_many :events, through: :event_owners
+  has_many :own_events, through: :event_owners, source: 'event'
 
   def participate!(event)
     participants.create!(event_id: event.id)
