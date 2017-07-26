@@ -7,5 +7,7 @@ Rails.application.routes.draw do
   end
   resources :tickets
 
-  resources :participants, only: [:create, :destroy]
+  resources :participants do
+    post 'kick_out', on: :member
+  end
 end
