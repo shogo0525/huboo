@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170719112022) do
+ActiveRecord::Schema.define(version: 20170802102143) do
 
   create_table "event_owners", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "user_id"
@@ -36,7 +36,11 @@ ActiveRecord::Schema.define(version: 20170719112022) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "kicked_out_at"
+    t.datetime "canceled_at"
+    t.string "comment"
+    t.bigint "ticket_id"
     t.index ["event_id"], name: "index_participants_on_event_id"
+    t.index ["ticket_id"], name: "index_participants_on_ticket_id"
     t.index ["user_id", "event_id"], name: "index_participants_on_user_id_and_event_id", unique: true
     t.index ["user_id"], name: "index_participants_on_user_id"
   end
@@ -72,6 +76,7 @@ ActiveRecord::Schema.define(version: 20170719112022) do
   add_foreign_key "event_owners", "events"
   add_foreign_key "event_owners", "users"
   add_foreign_key "participants", "events"
+  add_foreign_key "participants", "tickets"
   add_foreign_key "participants", "users"
   add_foreign_key "tickets", "events"
 end

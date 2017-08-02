@@ -16,8 +16,9 @@
       <%= f.submit "参加をキャンセルする" %>
     <% end %>
   <% else %>
-    <%= form_for(current_user.participants.build(event_id: @event.id)) do |f| %>
+    <%= form_for(current_user.participants.build(event_id: @event.id, ticket_id: @event.tickets.first.id)) do |f| %>
       <%= f.hidden_field :event_id %>
+      <%= f.hidden_field :ticket_id %>
       <%= f.submit "参加する" %>
     <% end %>
   <% end %>

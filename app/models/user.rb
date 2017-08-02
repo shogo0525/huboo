@@ -9,16 +9,21 @@ class User < ApplicationRecord
   has_many :events, through: :participants
   has_many :own_events, through: :event_owners, source: :event
 
-  def participate!(event)
-    participants.create!(event_id: event.id)
+  def participate!(event, ticket)
+    participant = participants.find_or_initialize_by(event_id: event.id, ticket_id: ticket.id)
+    participant.canceled_at = nil
+    participant.save!
   end
 
   def participated?(event)
-    participants.find_by(event_id: event.id)
+    participant = participants.find_by(event_id: event.id)
+    participant.present? && !participant.canceled_at?
   end
 
   def cancel!(event)
-    participants.find_by(event_id: event.id).destroy
+    participant = participants.find_by(event_id: event.id)
+    participant.canceled_at = Time.current
+    participant.save!
   end
 
   def owner?(event)
