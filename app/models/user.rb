@@ -12,18 +12,18 @@ class User < ApplicationRecord
   def participate!(event, ticket)
     participant = participants.find_or_initialize_by(event_id: event.id, ticket_id: ticket.id)
     participant.canceled_at = nil
-    participant.save
+    participant.save!
   end
 
   def participated?(event)
     participant = participants.find_by(event_id: event.id)
-    participant && !participant.canceled_at
+    participant.present? && !participant.canceled_at?
   end
 
   def cancel!(event)
     participant = participants.find_by(event_id: event.id)
     participant.canceled_at = Time.current
-    participant.save
+    participant.save!
   end
 
   def owner?(event)
