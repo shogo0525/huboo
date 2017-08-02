@@ -12,4 +12,15 @@ class ParticipantsController < ApplicationController
     current_user.cancel!(@event)
     redirect_to event_path(@event), notice: "キャンセルしました！"
   end
+
+  def kick_out
+    participant = Participant.find(params[:id])
+    participant.kicked_out_at = Time.current
+    if participant.save
+      flash[:notice] = '参加者を追い出しました'
+    else
+      flash[:notice] = '参加者を追いだせませんでした'
+    end
+    redirect_to event_path(participant.event)
+  end
 end

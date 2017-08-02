@@ -1,4 +1,7 @@
 <h3>イベント情報</h3>
+<% if user_signed_in? %>
+  <p>あなたはこのイベントの管理者<%= current_user.owner?(@event) ? "です" : "ではありません" %></p>
+<% end %>
 <ul>
   <li>イベント名：<%= @event.title %></li>
   <li>概要：<%= @event.description %></li>
@@ -20,11 +23,23 @@
   <% end %>
 <% end %>
 
+<h3>イベント主催者</h3>
+<p><%= @event.owners.first.name %></p>
+
 <h3>参加者一覧</h3>
 <% if @event.participants.present? %>
-  <ul>
+  <table>
     <% @event.participants.each do |participant| %>
-      <li><%= participant.user.id %></li>
+      <% unless participant.kicked_out_at %>
+        <tr>
+          <td><%= "#{participant.user.name} (ID:#{participant.user.id})" %></td>
+          <% if user_signed_in? && current_user.owner?(@event) %>
+            <td>
+              <%= button_to "追い出す", kick_out_participant_path(participant) %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
     <% end %>
-  </ul>
+  </table>
 <% end %>
