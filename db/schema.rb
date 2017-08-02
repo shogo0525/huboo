@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 20170802102143) do
     t.string "comment"
     t.bigint "ticket_id"
     t.index ["event_id"], name: "index_participants_on_event_id"
-    t.index ["ticket_id"], name: "index_participants_on_ticket_id", unique: true
+    t.index ["ticket_id"], name: "index_participants_on_ticket_id"
     t.index ["user_id", "event_id"], name: "index_participants_on_user_id_and_event_id", unique: true
     t.index ["user_id"], name: "index_participants_on_user_id"
   end
