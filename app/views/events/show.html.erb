@@ -1,14 +1,17 @@
-<h3>イベント情報</h3>
 <% if user_signed_in? %>
   <p>あなたはこのイベントの管理者<%= current_user.owner?(@event) ? "です" : "ではありません" %></p>
 <% end %>
-<ul>
-  <li>イベント名：<%= @event.title %></li>
-  <li>概要：<%= @event.description %></li>
-  <li>チケット名：<%= @event.tickets.first.name %></li>
-  <li>参加費：<%= "#{@event.tickets.first.price}円" %></li>
-  <li>定員：<%= "#{@event.tickets.first.capacity}人" %></li>
-</ul>
+<h3>イベント情報</h3>
+<table>
+  <tr>
+    <td>イベント名</td>
+    <td><%= @event.title %></td>
+  </tr>
+  <tr>
+    <td>概要</td>
+    <td><%= @event.description %></td>
+  </tr>
+</table>
 
 <% if user_signed_in? %>
   <% if current_user.participated?(@event) %>
@@ -16,9 +19,18 @@
       <%= f.submit "参加をキャンセルする" %>
     <% end %>
   <% else %>
+    <h3>チケットを選択</h3>
     <%= form_for(current_user.participants.build(event_id: @event.id, ticket_id: @event.tickets.first.id)) do |f| %>
+      <ul>
+        <% @event.tickets.each_with_index do |ticket, index| %>
+          <% checked = index == 0 ? true : false %>
+          <li>
+            <%= f.radio_button :ticket_id, ticket.id, checked: checked %>
+            チケット名：<%= ticket.name %> / 参加費：<%= "#{ticket.price}円" %> / 定員：<%= "#{ticket.capacity}人" %>
+          </li>
+        <% end %>
+      </ul>
       <%= f.hidden_field :event_id %>
-      <%= f.hidden_field :ticket_id %>
       <%= f.submit "参加する" %>
     <% end %>
   <% end %>
@@ -34,6 +46,7 @@
       <% unless participant.kicked_out_at %>
         <tr>
           <td><%= "#{participant.user.name} (ID:#{participant.user.id})" %></td>
+          <td>参加チケット：<%= participant.ticket.name %></td>
           <% if user_signed_in? && current_user.owner?(@event) %>
             <td>
               <%= button_to "追い出す", kick_out_participant_path(participant) %>

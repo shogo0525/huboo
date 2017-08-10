@@ -1,4 +1,5 @@
 <%= form_for event do |f| %>
+  <h3>イベントについて</h3>
   <div>
     <%= f.label :タイトル %>
     <%= f.text_field :title, value: @copy&.title %>
@@ -6,18 +7,13 @@
     <%= f.label :概要 %>
     <%= f.text_field :description, value: @copy&.description %>
   </div>
+  <h3>チケット</h3>
   <div>
     <%= f.fields_for :tickets do |tf| %>
-      <%= tf.label :チケット名 %>
-      <%= tf.text_field :name %>
-
-      <%= tf.label :参加費 %>
-      <%= tf.number_field :price %>
-
-      <%= tf.label :枚数 %>
-      <%= tf.number_field :capacity %>
+      <%= render 'tickets_form', tf: tf %>
+      <%=  %>
     <% end %>
   </div>
-
-  <%= f.submit '投稿' %>
+  <h3>イベントを作成する</h3>
+  <%= f.submit '作成！！' %>
 <% end %>

@@ -3,7 +3,7 @@ class EventsController < ApplicationController
   def index
     @events = Event.all
     @event = Event.new
-    @event.tickets.build
+    3.times.each { @event.tickets.build }
 
     # sample for gon
     gon.user_name = current_user.try!(:name) || '名無しさん'

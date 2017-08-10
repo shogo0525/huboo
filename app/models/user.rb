@@ -11,7 +11,6 @@ class User < ApplicationRecord
 
   def participate!(event, ticket)
     participant = participants.find_or_initialize_by(event_id: event.id, ticket_id: ticket.id)
-    participant.canceled_at = nil
     participant.save!
   end
 
@@ -22,8 +21,7 @@ class User < ApplicationRecord
 
   def cancel!(event)
     participant = participants.find_by(event_id: event.id)
-    participant.canceled_at = Time.current
-    participant.save!
+    participant.destroy!
   end
 
   def owner?(event)
