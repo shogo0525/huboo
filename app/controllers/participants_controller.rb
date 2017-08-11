@@ -4,8 +4,7 @@ class ParticipantsController < ApplicationController
   def create
     event = Event.find(params[:participant][:event_id])
     ticket = Ticket.find(params[:participant][:ticket_id])
-    comment = params[:participant][:comment]
-    current_user.participate!(event, ticket, comment)
+    current_user.participate!(event, ticket)
     redirect_to event_path(event), notice: "参加しました！"
   end
 

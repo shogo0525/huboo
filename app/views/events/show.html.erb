@@ -19,9 +19,6 @@
     <%= form_for(current_user.participants.build(event_id: @event.id, ticket_id: @event.tickets.first.id)) do |f| %>
       <%= f.hidden_field :event_id %>
       <%= f.hidden_field :ticket_id %>
-      <%= f.label :コメント %>
-      <%= f.text_field :comment %>
-      <br>
       <%= f.submit "参加する" %>
     <% end %>
   <% end %>
@@ -34,11 +31,13 @@
 <% if @event.participants.present? %>
   <table>
     <% @event.participants.each do |participant| %>
-      <% unless participant.canceled_at? || participant.kicked_out_at? %>
+      <% unless participant.kicked_out_at %>
         <tr>
-          <td><%= "#{participant.user.name} (コメント:#{participant.comment})" %></td>
+          <td><%= "#{participant.user.name} (ID:#{participant.user.id})" %></td>
           <% if user_signed_in? && current_user.owner?(@event) %>
-            <td><%= button_to "追い出す", kick_out_participant_path(participant) %></td>
+            <td>
+              <%= button_to "追い出す", kick_out_participant_path(participant) %>
+            </td>
           <% end %>
         </tr>
       <% end %>
