@@ -9,8 +9,9 @@ class User < ApplicationRecord
   has_many :events, through: :participants
   has_many :own_events, through: :event_owners, source: :event
 
-  def participate!(event, ticket)
+  def participate!(event, ticket, comment)
     participant = participants.find_or_initialize_by(event_id: event.id, ticket_id: ticket.id)
+    participant.comment = comment
     participant.canceled_at = nil
     participant.save!
   end
