@@ -28,7 +28,7 @@
 <p><%= @event.owners.first.name %></p>
 
 <h3>参加者一覧</h3>
-<% if @event.participants.present? %>
+<% if @event.participant_public_flg? && @event.participants.present? %>
   <table>
     <% @event.participants.each do |participant| %>
       <% unless participant.kicked_out_at %>
