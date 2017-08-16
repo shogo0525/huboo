@@ -18,6 +18,10 @@
       <%= tf.number_field :capacity %>
     <% end %>
   </div>
+  <div>
+    <%= f.label :参加者リストを公開する %>
+    <%= f.check_box :participant_public_flg %> (※イベントページに参加者リストを表示する場合にはチェックしてください。)
+  </div>
 
   <%= f.submit '投稿' %>
 <% end %>

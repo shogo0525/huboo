@@ -28,19 +28,23 @@
 <p><%= @event.owners.first.name %></p>
 
 <h3>参加者一覧</h3>
-<% if @event.participants.present? %>
-  <table>
-    <% @event.participants.each do |participant| %>
-      <% unless participant.kicked_out_at %>
-        <tr>
-          <td><%= "#{participant.user.name} (ID:#{participant.user.id})" %></td>
-          <% if user_signed_in? && current_user.owner?(@event) %>
-            <td>
-              <%= button_to "追い出す", kick_out_participant_path(participant) %>
-            </td>
-          <% end %>
-        </tr>
+<% if @event.participant_public_flg? %>
+  <% if @event.participants.present? %>
+    <table>
+      <% @event.participants.each do |participant| %>
+        <% unless participant.kicked_out_at %>
+          <tr>
+            <td><%= "#{participant.user.name} (ID:#{participant.user.id})" %></td>
+            <% if user_signed_in? && current_user.owner?(@event) %>
+              <td>
+                <%= button_to "追い出す", kick_out_participant_path(participant) %>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
       <% end %>
-    <% end %>
-  </table>
+    </table>
+  <% end %>
+<% else %>
+  <p>このイベントの参加者リストは非公開です。</p>
 <% end %>
