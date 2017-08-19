@@ -3,7 +3,7 @@ class EventsController < ApplicationController
   def index
     @events = Event.all
     @event = Event.new
-    @event.tickets.build
+    3.times.each { @event.tickets.build }
 
     # sample for gon
     gon.user_name = current_user.try!(:name) || '名無しさん'
@@ -42,7 +42,7 @@ class EventsController < ApplicationController
   private
     def events_params
       params.require(:event).permit(
-        :title, :description,
+        :title, :description, :participant_public_flg,
         tickets_attributes: [:name, :price, :capacity]
     )
     end

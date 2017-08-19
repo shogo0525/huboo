@@ -23,8 +23,7 @@ class User < ApplicationRecord
 
   def cancel!(event)
     participant = participants.find_by(event_id: event.id)
-    participant.canceled_at = Time.current
-    participant.save!
+    participant.destroy!
   end
 
   def owner?(event)
