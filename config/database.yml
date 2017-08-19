@@ -27,4 +27,6 @@ test:
 
 production:
   <<: *development
-  database: huboo_production
+  adapter: postgresql
+  encoding: unicode
+  pool: 5

@@ -10,7 +10,8 @@ end
 gem 'rails', '~> 5.1.1'
 
 # Use MySQL as the DB server
-gem 'mysql2'
+gem 'mysql2', group: :development
+gem 'pg', group: :production
 
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
