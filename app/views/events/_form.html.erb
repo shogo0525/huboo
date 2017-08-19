@@ -14,6 +14,10 @@
       <%=  %>
     <% end %>
   </div>
-  <h3>イベントを作成する</h3>
-  <%= f.submit '作成！！' %>
+  <div>
+    <%= f.label :参加者リストを公開する %>
+    <%= f.check_box :participant_public_flg %> (※イベントページに参加者リストを表示する場合にはチェックしてください。)
+  </div>
+
+  <%= f.submit '投稿' %>
 <% end %>

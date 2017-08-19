@@ -42,7 +42,7 @@ class EventsController < ApplicationController
   private
     def events_params
       params.require(:event).permit(
-        :title, :description,
+        :title, :description, :participant_public_flg,
         tickets_attributes: [:name, :price, :capacity]
     )
     end
