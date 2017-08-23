@@ -6,6 +6,14 @@
 
     <%= f.label :概要 %>
     <%= f.text_field :description, value: @copy&.description %>
+    <br>
+    <%= f.label :内容 %>
+    <%= f.text_area :content, value: @copy&.content %>
+    <br>
+    <%= f.label :開始時間 %>
+    <%= f.datetime_local_field :start_time %>
+    <%= f.label :終了時間 %>
+    <%= f.datetime_local_field :end_time %>
   </div>
   <h3>チケット</h3>
   <div>
