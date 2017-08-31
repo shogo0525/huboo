@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   root to: 'events#index'
   resources :events do
     get 'copy', action: :new
+    post 'cancel', on: :member, action: :cancel
   end
   resources :tickets
 

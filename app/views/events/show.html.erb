@@ -1,5 +1,11 @@
 <% if user_signed_in? %>
   <p>あなたはこのイベントの管理者<%= current_user.owner?(@event) ? "です" : "ではありません" %></p>
+  <% if @event.canceled_at? %>
+    <p style="color:red;">このイベントは中止となりました</p>
+  <% else%>
+    <%= button_to "イベントを中止する", cancel_event_path(@event),
+                  data: { confirm: "この操作は取り消せません。本当にイベントを中止しますか？" } %>
+  <% end %>
 <% end %>
 <h3>イベント情報</h3>
 <table>
