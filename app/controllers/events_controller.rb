@@ -30,6 +30,16 @@ class EventsController < ApplicationController
     end
   end
 
+  def cancel
+    event = Event.find(params[:id])
+    event.canceled_at = Time.current
+    if event.save
+      redirect_to event, notice: "イベントを中止しました！"
+    else
+      redirect_to event, notice: "イベントが中止できませんでした！"
+    end
+  end
+
 
   def destroy
     if @event.destroy
@@ -42,7 +52,7 @@ class EventsController < ApplicationController
   private
     def events_params
       params.require(:event).permit(
-        :title, :description, :content, :start_time, :end_time, :participant_public_flg,
+        :title, :description, :content, :start_time, :end_time, :canceled_at, :participant_public_flg,
         tickets_attributes: [:name, :price, :capacity]
     )
     end
